@@ -5,54 +5,25 @@ import { useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import { track } from "../analytics";
 
-type BookingPageProps = {
+type BookingPageViewProps = {
   title: string;
   description: string;
   priceLabel?: string;
   highlights: string[];
   prepareList: string[];
-  bookingLink: string;
-  srcDefault: string;
+  bookingHref: string;
+  onBookingClick: () => void;
 };
 
-export function BookingPage({
+function BookingPageView({
   title,
   description,
   priceLabel,
   highlights,
   prepareList,
-  bookingLink,
-  srcDefault,
-}: BookingPageProps) {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-
-  const src = useMemo(() => {
-    const fromQuery = searchParams?.get("src");
-    return fromQuery && fromQuery.trim().length > 0 ? fromQuery : srcDefault;
-  }, [searchParams, srcDefault]);
-
-  const bookingHref = useMemo(() => {
-    const hasQuery = bookingLink.includes("?");
-    const separator = hasQuery ? "&" : "?";
-    return `${bookingLink}${separator}src=${encodeURIComponent(src)}`;
-  }, [bookingLink, src]);
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem("booking_src", src);
-    } catch {
-      // ignore storage errors
-    }
-    // eslint-disable-next-line no-console
-    console.log(`booking_src=${src}`);
-    track("booking_page_view", { src, path: pathname });
-  }, [pathname, src]);
-
-  const handleClick = () => {
-    track("booking_click", { src, path: pathname, link: bookingHref });
-    window.open(bookingHref, "_blank", "noopener,noreferrer");
-  };
+  bookingHref,
+  onBookingClick,
+}: BookingPageViewProps) {
 
   return (
     <main className="min-h-screen bg-[radial-gradient(1200px_600px_at_20%_10%,#F4F1FF_0%,transparent_60%),radial-gradient(900px_500px_at_80%_30%,#EFEAFF_0%,transparent_55%),linear-gradient(to_bottom,#FBFAFF_0%,#F5F2FF_45%,#FBFAFF_100%)] text-[#1F1F2E]">
@@ -81,9 +52,9 @@ export function BookingPage({
             </div>
 
             <div className="mt-5 flex md:mt-0 md:w-64 md:flex-col md:items-end">
-              <button
+                <button
                 type="button"
-                onClick={handleClick}
+                onClick={onBookingClick}
                 className="inline-flex w-full items-center justify-center rounded-full bg-[#6B5CFF] px-5 py-2.5 text-sm font-medium text-white shadow-md shadow-[0_14px_36px_rgba(107,92,255,0.32)] transition hover:bg-[#5747FF] md:w-auto"
               >
                 Перейти к записи
@@ -132,6 +103,95 @@ export function BookingPage({
         </section>
       </div>
     </main>
+  );
+}
+
+type BookingPageProps = {
+  title: string;
+  description: string;
+  priceLabel?: string;
+  highlights: string[];
+  prepareList: string[];
+  bookingLink: string;
+  srcDefault: string;
+  // Optional props to override hooks (for Suspense boundary compatibility)
+  src?: string;
+  bookingHref?: string;
+  pathname?: string;
+  onBookingClick?: () => void;
+};
+
+export function BookingPage({
+  title,
+  description,
+  priceLabel,
+  highlights,
+  prepareList,
+  bookingLink,
+  srcDefault,
+  src: srcProp,
+  bookingHref: bookingHrefProp,
+  pathname: pathnameProp,
+  onBookingClick: onBookingClickProp,
+}: BookingPageProps) {
+  // If all required props are provided, use them directly without hooks
+  if (srcProp !== undefined && bookingHrefProp !== undefined && pathnameProp !== undefined && onBookingClickProp !== undefined) {
+    return (
+      <BookingPageView
+        title={title}
+        description={description}
+        priceLabel={priceLabel}
+        highlights={highlights}
+        prepareList={prepareList}
+        bookingHref={bookingHrefProp}
+        onBookingClick={onBookingClickProp}
+      />
+    );
+  }
+
+  // Otherwise, use hooks (for backward compatibility with other pages)
+  const searchParams = useSearchParams();
+  const pathnameHook = usePathname();
+
+  const src = useMemo(() => {
+    const fromQuery = searchParams?.get("src");
+    return fromQuery && fromQuery.trim().length > 0 ? fromQuery : srcDefault;
+  }, [searchParams, srcDefault]);
+
+  const bookingHref = useMemo(() => {
+    const hasQuery = bookingLink.includes("?");
+    const separator = hasQuery ? "&" : "?";
+    return `${bookingLink}${separator}src=${encodeURIComponent(src)}`;
+  }, [bookingLink, src]);
+
+  const pathname = pathnameProp ?? pathnameHook;
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem("booking_src", src);
+    } catch {
+      // ignore storage errors
+    }
+    // eslint-disable-next-line no-console
+    console.log(`booking_src=${src}`);
+    track("booking_page_view", { src, path: pathname });
+  }, [pathname, src]);
+
+  const handleClick = () => {
+    track("booking_click", { src, path: pathname, link: bookingHref });
+    window.open(bookingHref, "_blank", "noopener,noreferrer");
+  };
+
+  return (
+    <BookingPageView
+      title={title}
+      description={description}
+      priceLabel={priceLabel}
+      highlights={highlights}
+      prepareList={prepareList}
+      bookingHref={bookingHref}
+      onBookingClick={handleClick}
+    />
   );
 }
 

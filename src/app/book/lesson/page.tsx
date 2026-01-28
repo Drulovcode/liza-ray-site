@@ -1,9 +1,10 @@
+import { Suspense } from "react";
 import { BookingPage } from "../BookingPage";
 
 const BOOKING_LINK =
   "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1VFZl0PYPfX6wQwxI4KS8_2Z5SSdKYs3TrM4u1Vtq-JIXNEohYarlnGhvbf4apYO2QzlvvDLyP";
 
-export default function LessonPage() {
+function LessonPageContent() {
   return (
     <BookingPage
       title="Одно занятие"
@@ -23,6 +24,14 @@ export default function LessonPage() {
       bookingLink={BOOKING_LINK}
       srcDefault="pricing_lesson"
     />
+  );
+}
+
+export default function LessonPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LessonPageContent />
+    </Suspense>
   );
 }
 

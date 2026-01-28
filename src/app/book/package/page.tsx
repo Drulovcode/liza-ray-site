@@ -1,9 +1,10 @@
+import { Suspense } from "react";
 import { BookingPage } from "../BookingPage";
 
 const BOOKING_LINK =
   "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1VFZl0PYPfX6wQwxI4KS8_2Z5SSdKYs3TrM4u1Vtq-JIXNEohYarlnGhvbf4apYO2QzlvvDLyP";
 
-export default function PackagePage() {
+function PackagePageContent() {
   return (
     <BookingPage
       title="Пакет из 12 занятий"
@@ -23,6 +24,14 @@ export default function PackagePage() {
       bookingLink={BOOKING_LINK}
       srcDefault="pricing_package"
     />
+  );
+}
+
+export default function PackagePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PackagePageContent />
+    </Suspense>
   );
 }
 
