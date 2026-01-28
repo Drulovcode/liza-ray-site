@@ -1,12 +1,15 @@
 import Image from "next/image";
+import { MobileMenu } from "./components/MobileMenu";
+
+const BOOKING_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1VFZl0PYPfX6wQwxI4KS8_2Z5SSdKYs3TrM4u1Vtq-JIXNEohYarlnGhvbf4apYO2QzlvvDLyP";
 
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-white text-black">
       {/* Header */}
-      <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/80 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:py-5">
-          <a href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
+      <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/80 backdrop-blur" style={{ pointerEvents: "auto" }}>
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:py-5" style={{ pointerEvents: "auto" }}>
+          <a href="/" className="relative z-30 flex items-center gap-3 transition-opacity hover:opacity-80" style={{ pointerEvents: "auto" }}>
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/30 bg-[radial-gradient(circle_at_center,#C9B6FF_0%,#6D4BFF_100%)] shadow-[0_2px_8px_rgba(109,75,255,0.3),0_4px_16px_rgba(109,75,255,0.2)] overflow-hidden">
               <span
                 style={{
@@ -29,29 +32,35 @@ export default function HomePage() {
               </span>
             </div>
           </a>
-          <nav className="hidden items-center gap-7 md:flex">
-            <a className="text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#services">
+          <nav className="hidden items-center gap-7 md:flex" style={{ pointerEvents: "auto" }}>
+            <a className="relative z-30 text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#services" style={{ pointerEvents: "auto" }}>
               Услуги
             </a>
-            <a className="text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#results">
+            <a className="relative z-30 text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#results" style={{ pointerEvents: "auto" }}>
               Результаты
             </a>
-            <a className="text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#reviews">
+            <a className="relative z-30 text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#reviews" style={{ pointerEvents: "auto" }}>
               Отзывы
             </a>
-            <a className="text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#faq">
+            <a className="relative z-30 text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#faq" style={{ pointerEvents: "auto" }}>
               Вопросы
             </a>
-            <a className="text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#contact">
+            <a className="relative z-30 text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#contact" style={{ pointerEvents: "auto" }}>
               Контакты
             </a>
           </nav>
-          <a
-            href="/book?src=header"
-            className="hidden rounded-full border border-[#4AA3C8] px-4 py-2 text-sm font-medium text-[#4AA3C8] md:inline-flex"
-          >
-            Записаться
-          </a>
+          <div className="flex items-center gap-3" style={{ pointerEvents: "auto" }}>
+            <MobileMenu />
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-30 hidden rounded-full border border-[#6B5CFF] px-4 py-2 text-sm font-medium text-[#6B5CFF] transition hover:bg-[#EFECFF] md:inline-flex"
+              style={{ pointerEvents: "auto" }}
+            >
+              Записаться
+            </a>
+          </div>
         </div>
       </header>
 
@@ -73,7 +82,9 @@ export default function HomePage() {
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a
-                href="/book?src=hero"
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full rounded-full bg-[#6B5CFF] px-6 py-3 text-center text-sm font-medium text-white shadow-md shadow-[0_14px_36px_rgba(107,92,255,0.35)] transition hover:bg-[#5747FF] sm:w-auto"
               >
                 Записаться на консультацию
@@ -274,7 +285,9 @@ export default function HomePage() {
                 <li>• Определение примерных сроков работы</li>
               </ul>
               <a
-                href="/book/free?src=pricing_free"
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-6 inline-flex w-full justify-center rounded-full border border-[#6B5CFF] px-5 py-2.5 text-sm font-medium text-[#6B5CFF] transition hover:bg-[#EFECFF]"
               >
                 Записаться
@@ -296,7 +309,9 @@ export default function HomePage() {
                 <li>• Ответы на возникающие вопросы во внеучебное время</li>
               </ul>
               <a
-                href="/book/lesson?src=pricing_lesson"
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-6 inline-flex w-full justify-center rounded-full border border-[#6B5CFF] px-5 py-2.5 text-sm font-medium text-[#6B5CFF] transition hover:bg-[#EFECFF]"
               >
                 Записаться
@@ -328,7 +343,9 @@ export default function HomePage() {
                
               </ul>
               <a
-                href="/book/package?src=pricing_package"
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-6 inline-flex w-full justify-center rounded-full bg-[#6B5CFF] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#5747FF]"
               >
                 Записаться
