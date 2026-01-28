@@ -62,6 +62,34 @@ function BookingPageView({
             </div>
           </header>
 
+          {/* Mobile CTA buttons - shown above content on mobile */}
+          <div className="mt-8 flex flex-col gap-3 sm:hidden">
+            <a
+              href={bookingHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                e.preventDefault();
+                onBookingClick();
+              }}
+              className="flex w-full items-center justify-center rounded-full bg-[#6B5CFF] px-6 py-3.5 text-base font-semibold text-white shadow-md shadow-[0_14px_36px_rgba(107,92,255,0.32)] transition hover:bg-[#5747FF]"
+            >
+              Записаться
+            </a>
+            <a
+              href={bookingHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                e.preventDefault();
+                onBookingClick();
+              }}
+              className="flex w-full items-center justify-center rounded-full border-2 border-[#6B5CFF] bg-white px-6 py-3.5 text-base font-semibold text-[#6B5CFF] transition hover:bg-[#EFECFF]"
+            >
+              Выбрать время
+            </a>
+          </div>
+
           <div className="mt-8 grid gap-8 md:grid-cols-2">
             <div>
               <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-[#6B6B85]">
@@ -88,14 +116,31 @@ function BookingPageView({
                 <p className="text-xs text-[#6B6B85]">
                   Если календарь не отображается — нажмите кнопку записи выше.
                 </p>
-                <div className="mt-3 h-[480px] w-full overflow-hidden rounded-xl border border-[#E7E1FF]/80 bg-white/80">
-                  <iframe
-                    src={bookingHref}
-                    title="Запись через Google Календарь"
-                    className="h-full w-full border-0"
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  />
+                <div className="mt-4 flex flex-col gap-3 sm:mt-6">
+                  <a
+                    href={bookingHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onBookingClick();
+                    }}
+                    className="flex w-full items-center justify-center rounded-full bg-[#6B5CFF] px-6 py-3.5 text-base font-semibold text-white shadow-md shadow-[0_14px_36px_rgba(107,92,255,0.32)] transition hover:bg-[#5747FF] sm:w-auto sm:px-5 sm:py-2.5 sm:text-sm"
+                  >
+                    Записаться
+                  </a>
+                  <a
+                    href={bookingHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onBookingClick();
+                    }}
+                    className="flex w-full items-center justify-center rounded-full border-2 border-[#6B5CFF] bg-white px-6 py-3.5 text-base font-semibold text-[#6B5CFF] transition hover:bg-[#EFECFF] sm:w-auto sm:px-5 sm:py-2.5 sm:text-sm"
+                  >
+                    Выбрать время
+                  </a>
                 </div>
               </div>
             </div>
