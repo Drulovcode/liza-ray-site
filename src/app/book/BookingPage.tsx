@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
-import { useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
-import { track } from "../analytics";
+
+const BOOKING_URL = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1VFZl0PYPfX6wQwxI4KS8_2Z5SSdKYs3TrM4u1Vtq-JIXNEohYarlnGhvbf4apYO2QzlvvDLyP";
 
 type BookingPageViewProps = {
   title: string;
@@ -11,8 +10,6 @@ type BookingPageViewProps = {
   priceLabel?: string;
   highlights: string[];
   prepareList: string[];
-  bookingHref: string;
-  onBookingClick: () => void;
 };
 
 function BookingPageView({
@@ -21,8 +18,6 @@ function BookingPageView({
   priceLabel,
   highlights,
   prepareList,
-  bookingHref,
-  onBookingClick,
 }: BookingPageViewProps) {
 
   return (
@@ -52,38 +47,31 @@ function BookingPageView({
             </div>
 
             <div className="mt-5 flex md:mt-0 md:w-64 md:flex-col md:items-end">
-                <button
-                type="button"
-                onClick={onBookingClick}
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex w-full items-center justify-center rounded-full bg-[#6B5CFF] px-5 py-2.5 text-sm font-medium text-white shadow-md shadow-[0_14px_36px_rgba(107,92,255,0.32)] transition hover:bg-[#5747FF] md:w-auto"
               >
                 Перейти к записи
-              </button>
+              </a>
             </div>
           </header>
 
           {/* Mobile CTA buttons - shown above content on mobile */}
           <div className="mt-8 flex flex-col gap-3 sm:hidden">
             <a
-              href={bookingHref}
+              href={BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => {
-                e.preventDefault();
-                onBookingClick();
-              }}
               className="flex w-full items-center justify-center rounded-full bg-[#6B5CFF] px-6 py-3.5 text-base font-semibold text-white shadow-md shadow-[0_14px_36px_rgba(107,92,255,0.32)] transition hover:bg-[#5747FF]"
             >
               Записаться
             </a>
             <a
-              href={bookingHref}
+              href={BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => {
-                e.preventDefault();
-                onBookingClick();
-              }}
               className="flex w-full items-center justify-center rounded-full border-2 border-[#6B5CFF] bg-white px-6 py-3.5 text-base font-semibold text-[#6B5CFF] transition hover:bg-[#EFECFF]"
             >
               Выбрать время
@@ -118,25 +106,17 @@ function BookingPageView({
                 </p>
                 <div className="mt-4 flex flex-col gap-3 sm:mt-6">
                   <a
-                    href={bookingHref}
+                    href={BOOKING_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onBookingClick();
-                    }}
                     className="flex w-full items-center justify-center rounded-full bg-[#6B5CFF] px-6 py-3.5 text-base font-semibold text-white shadow-md shadow-[0_14px_36px_rgba(107,92,255,0.32)] transition hover:bg-[#5747FF] sm:w-auto sm:px-5 sm:py-2.5 sm:text-sm"
                   >
                     Записаться
                   </a>
                   <a
-                    href={bookingHref}
+                    href={BOOKING_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onBookingClick();
-                    }}
                     className="flex w-full items-center justify-center rounded-full border-2 border-[#6B5CFF] bg-white px-6 py-3.5 text-base font-semibold text-[#6B5CFF] transition hover:bg-[#EFECFF] sm:w-auto sm:px-5 sm:py-2.5 sm:text-sm"
                   >
                     Выбрать время
@@ -157,13 +137,8 @@ type BookingPageProps = {
   priceLabel?: string;
   highlights: string[];
   prepareList: string[];
-  bookingLink: string;
-  srcDefault: string;
-  // Optional props to override hooks (for Suspense boundary compatibility)
-  src?: string;
-  bookingHref?: string;
-  pathname?: string;
-  onBookingClick?: () => void;
+  bookingLink?: string;
+  srcDefault?: string;
 };
 
 export function BookingPage({
@@ -172,61 +147,7 @@ export function BookingPage({
   priceLabel,
   highlights,
   prepareList,
-  bookingLink,
-  srcDefault,
-  src: srcProp,
-  bookingHref: bookingHrefProp,
-  pathname: pathnameProp,
-  onBookingClick: onBookingClickProp,
 }: BookingPageProps) {
-  // If all required props are provided, use them directly without hooks
-  if (srcProp !== undefined && bookingHrefProp !== undefined && pathnameProp !== undefined && onBookingClickProp !== undefined) {
-    return (
-      <BookingPageView
-        title={title}
-        description={description}
-        priceLabel={priceLabel}
-        highlights={highlights}
-        prepareList={prepareList}
-        bookingHref={bookingHrefProp}
-        onBookingClick={onBookingClickProp}
-      />
-    );
-  }
-
-  // Otherwise, use hooks (for backward compatibility with other pages)
-  const searchParams = useSearchParams();
-  const pathnameHook = usePathname();
-
-  const src = useMemo(() => {
-    const fromQuery = searchParams?.get("src");
-    return fromQuery && fromQuery.trim().length > 0 ? fromQuery : srcDefault;
-  }, [searchParams, srcDefault]);
-
-  const bookingHref = useMemo(() => {
-    const hasQuery = bookingLink.includes("?");
-    const separator = hasQuery ? "&" : "?";
-    return `${bookingLink}${separator}src=${encodeURIComponent(src)}`;
-  }, [bookingLink, src]);
-
-  const pathname = pathnameProp ?? pathnameHook;
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem("booking_src", src);
-    } catch {
-      // ignore storage errors
-    }
-    // eslint-disable-next-line no-console
-    console.log(`booking_src=${src}`);
-    track("booking_page_view", { src, path: pathname });
-  }, [pathname, src]);
-
-  const handleClick = () => {
-    track("booking_click", { src, path: pathname, link: bookingHref });
-    window.open(bookingHref, "_blank", "noopener,noreferrer");
-  };
-
   return (
     <BookingPageView
       title={title}
@@ -234,8 +155,6 @@ export function BookingPage({
       priceLabel={priceLabel}
       highlights={highlights}
       prepareList={prepareList}
-      bookingHref={bookingHref}
-      onBookingClick={handleClick}
     />
   );
 }
