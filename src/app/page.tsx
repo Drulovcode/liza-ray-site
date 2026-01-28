@@ -7,10 +7,10 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-white text-black">
       {/* Header */}
-      <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/80 backdrop-blur" style={{ pointerEvents: "auto" }}>
+      <header className="fixed top-0 left-0 right-0 z-[50] border-b border-slate-200 bg-white md:sticky md:bg-white/80 md:backdrop-blur" style={{ pointerEvents: "auto" }}>
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:py-5" style={{ pointerEvents: "auto" }}>
-          <a href="/" className="relative z-30 flex items-center gap-3 transition-opacity hover:opacity-80" style={{ pointerEvents: "auto" }}>
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/30 bg-[radial-gradient(circle_at_center,#C9B6FF_0%,#6D4BFF_100%)] shadow-[0_2px_8px_rgba(109,75,255,0.3),0_4px_16px_rgba(109,75,255,0.2)] overflow-hidden">
+          <a href="/" className="relative z-[60] flex items-center gap-3 transition-opacity hover:opacity-80" style={{ pointerEvents: "auto" }}>
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/30 bg-[radial-gradient(circle_at_center,#C9B6FF_0%,#6D4BFF_100%)] shadow-[0_2px_8px_rgba(109,75,255,0.3),0_4px_16px_rgba(109,75,255,0.2)] overflow-hidden" style={{ pointerEvents: "auto" }}>
               <span
                 style={{
                   display: 'block',
@@ -20,6 +20,7 @@ export default function HomePage() {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center center',
                   backgroundRepeat: 'no-repeat',
+                  pointerEvents: 'none',
                 }}
               ></span>
             </div>
@@ -33,29 +34,40 @@ export default function HomePage() {
             </div>
           </a>
           <nav className="hidden items-center gap-7 md:flex" style={{ pointerEvents: "auto" }}>
-            <a className="relative z-30 text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#services" style={{ pointerEvents: "auto" }}>
+            <a className="relative z-[60] text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#services" style={{ pointerEvents: "auto" }}>
               Услуги
             </a>
-            <a className="relative z-30 text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#results" style={{ pointerEvents: "auto" }}>
+            <a className="relative z-[60] text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#results" style={{ pointerEvents: "auto" }}>
               Результаты
             </a>
-            <a className="relative z-30 text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#reviews" style={{ pointerEvents: "auto" }}>
+            <a className="relative z-[60] text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#reviews" style={{ pointerEvents: "auto" }}>
               Отзывы
             </a>
-            <a className="relative z-30 text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#faq" style={{ pointerEvents: "auto" }}>
+            <a className="relative z-[60] text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#faq" style={{ pointerEvents: "auto" }}>
               Вопросы
             </a>
-            <a className="relative z-30 text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#contact" style={{ pointerEvents: "auto" }}>
+            <a className="relative z-[60] text-sm text-[#64748B] transition hover:text-[#0F172A]" href="#contact" style={{ pointerEvents: "auto" }}>
               Контакты
             </a>
           </nav>
-          <div className="flex items-center gap-3" style={{ pointerEvents: "auto" }}>
-            <MobileMenu />
+          <div className="flex items-center gap-2 md:gap-3" style={{ pointerEvents: "auto" }}>
+            {/* Mobile booking button */}
             <a
               href={BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative z-30 hidden rounded-full border border-[#6B5CFF] px-4 py-2 text-sm font-medium text-[#6B5CFF] transition hover:bg-[#EFECFF] md:inline-flex"
+              className="relative z-[60] rounded-full border border-[#6B5CFF] bg-white px-3 py-1.5 text-xs font-medium text-[#6B5CFF] transition hover:bg-[#EFECFF] md:hidden"
+              style={{ pointerEvents: "auto" }}
+            >
+              Записаться
+            </a>
+            <MobileMenu />
+            {/* Desktop booking button */}
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-[60] hidden rounded-full border border-[#6B5CFF] px-4 py-2 text-sm font-medium text-[#6B5CFF] transition hover:bg-[#EFECFF] md:inline-flex"
               style={{ pointerEvents: "auto" }}
             >
               Записаться
@@ -65,7 +77,7 @@ export default function HomePage() {
       </header>
 
       {/* Hero */}
-      <section className="mx-auto max-w-6xl bg-gradient-to-b from-[#F4F2FF] via-[#EEF0FF] to-[#FFFFFF] px-4 pb-12 pt-10 md:pb-18 md:pt-16">
+      <section className="mx-auto max-w-6xl bg-gradient-to-b from-[#F4F2FF] via-[#EEF0FF] to-[#FFFFFF] px-4 pb-12 pt-[73px] md:pt-10 md:pb-18 md:pt-16">
         <div className="grid items-start gap-10 md:grid-cols-2">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-[#E7E3FF] px-3 py-1 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-[#4B3FFF]">
