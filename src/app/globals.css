@@ -1,0 +1,320 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap");
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  /* Base page colors */
+  --background: #f4f2ff;
+  --foreground: #1f1f2e;
+
+  /* Clinic design system (now violet) */
+  --clinic-primary: #6b5cff;
+  --clinic-accent: #c2b8ff;
+  --clinic-secondary: #8b7cff;
+
+  --clinic-surface: #ffffff;
+  --clinic-surface-muted: #f3f5f9;
+  --clinic-border-soft: #e0e4ee;
+  --clinic-border-strong: #b5c0d6;
+
+  --clinic-text-main: #1f1f2e;
+  --clinic-text-muted: #6b6b85;
+
+  --clinic-radius-lg: 18px;
+  --clinic-radius-md: 12px;
+  --clinic-radius-pill: 999px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+body {
+  background: linear-gradient(180deg, #f4f2ff, #eef0ff, #ffffff);
+  color: var(--clinic-text-main);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Sora", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  letter-spacing: -0.02em;
+}
+
+main {
+  background-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Layout shell */
+.clinic-shell {
+  min-height: 100vh;
+  background: radial-gradient(
+      circle at top left,
+      rgba(107, 92, 255, 0.12),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(139, 124, 255, 0.12),
+      transparent 55%
+    ),
+    var(--background);
+  color: var(--clinic-text-main);
+}
+
+.clinic-header {
+  border-bottom: 1px solid rgba(229, 231, 235, 0.9);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(18px);
+}
+
+.clinic-nav-link {
+  position: relative;
+  font-size: 0.9rem;
+  color: var(--clinic-text-muted);
+}
+
+.clinic-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.4rem;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--clinic-primary),
+    var(--clinic-secondary)
+  );
+  border-radius: 999px;
+  transition: width 180ms ease-out;
+}
+
+.clinic-nav-link:hover::after {
+  width: 100%;
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--clinic-radius-pill);
+  padding: 0.75rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #ffffff;
+  background: linear-gradient(135deg, #6b5cff, #5747ff);
+  box-shadow: 0 12px 24px rgba(107, 92, 255, 0.3);
+  transition: box-shadow 160ms ease-out, transform 160ms ease-out,
+    background 160ms ease-out;
+}
+
+.btn-primary:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 16px 32px rgba(87, 71, 255, 0.35);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--clinic-radius-pill);
+  padding: 0.75rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 1px solid var(--clinic-border-soft);
+  background-color: rgba(255, 255, 255, 0.8);
+  color: var(--clinic-text-main);
+  transition: background-color 160ms ease-out, border-color 160ms ease-out;
+}
+
+.btn-outline:hover {
+  background-color: var(--clinic-surface-muted);
+  border-color: var(--clinic-border-strong);
+  text-decoration: none;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--clinic-radius-pill);
+  padding: 0.6rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: var(--clinic-primary);
+  transition: background-color 160ms ease-out, border-color 160ms ease-out;
+}
+
+.btn-ghost:hover {
+  background-color: rgba(107, 92, 255, 0.06);
+  border-color: rgba(107, 92, 255, 0.3);
+  text-decoration: none;
+}
+
+/* Cards & surfaces */
+.clinic-card {
+  border-radius: var(--clinic-radius-lg);
+  border: 1px solid var(--clinic-border-soft);
+  background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(243, 245, 249, 0.95)
+    );
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.04);
+}
+
+.clinic-card-soft {
+  border-radius: var(--clinic-radius-lg);
+  border: 1px solid var(--clinic-border-soft);
+  background-color: var(--clinic-surface);
+}
+
+.clinic-card-emphasis {
+  border-radius: var(--clinic-radius-lg);
+  border: 1px solid rgba(107, 92, 255, 0.4);
+  background: radial-gradient(
+      circle at top right,
+      rgba(107, 92, 255, 0.14),
+      transparent 55%
+    ),
+    var(--clinic-surface);
+  box-shadow: 0 20px 50px rgba(107, 92, 255, 0.26);
+}
+
+.clinic-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: var(--clinic-radius-pill);
+  padding: 0.3rem 0.85rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clinic-primary);
+  background-color: rgba(107, 92, 255, 0.08);
+}
+
+.clinic-badge-accent {
+  border-radius: var(--clinic-radius-pill);
+  padding: 0.35rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background-color: var(--clinic-accent);
+  color: #2f264f;
+}
+
+/* Sections */
+.clinic-section {
+  border-top: 1px solid var(--clinic-border-soft);
+  background-color: var(--clinic-surface);
+}
+
+.clinic-section-muted {
+  border-top: 1px solid var(--clinic-border-soft);
+  background-color: var(--clinic-surface-muted);
+}
+
+.clinic-section-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem;
+}
+
+.clinic-section-heading {
+  font-size: 1.8rem;
+}
+
+@media (min-width: 768px) {
+  .clinic-section-inner {
+    padding: 5.5rem 1.5rem;
+  }
+
+  .clinic-section-heading {
+    font-size: 2.1rem;
+  }
+}
+
+.clinic-section-intro {
+  max-width: 36rem;
+  font-size: 0.95rem;
+  color: var(--clinic-text-muted);
+  line-height: 1.75;
+}
+
+.clinic-stat-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clinic-text-muted);
+}
+
+.clinic-input {
+  border-radius: var(--clinic-radius-md);
+  border: 1px solid var(--clinic-border-soft);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.9rem;
+  transition: border-color 150ms ease-out, box-shadow 150ms ease-out,
+    background-color 150ms ease-out;
+}
+
+.clinic-input:focus {
+  outline: none;
+  border-color: rgba(139, 124, 255, 0.95);
+  box-shadow: 0 0 0 1px rgba(139, 124, 255, 0.55);
+  background-color: #ffffff;
+}
+
+.clinic-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clinic-text-muted);
+}
+
+.clinic-list {
+  font-size: 0.9rem;
+  color: var(--clinic-text-muted);
+}
+
+/* Logo mark */
+.logo-gradient {
+  background: radial-gradient(
+    circle at center,
+    #c9b6ff 0%,
+    #b5a0ff 40%,
+    #8b7cff 70%,
+    #6d4bff 100%
+  );
+  box-shadow: 0 2px 8px rgba(109, 75, 255, 0.25),
+    0 4px 20px rgba(109, 75, 255, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.5);
+}
